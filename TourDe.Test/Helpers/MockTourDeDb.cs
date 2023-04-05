@@ -1,16 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TourDe.Data;
+using TourDe.Api.Data;
 
 namespace TourDe.Api.Test.Helpers;
 
-public class MockTourDeDb : IDbContextFactory<TourDeContext>
+public class MockTourDeDb : IDbContextFactory<DatabaseContext>
 {
-    public TourDeContext CreateDbContext()
+    /// <summary>
+    /// Creates an in-memory database for use in unit testing.
+    /// </summary>
+    /// <returns></returns>
+    public DatabaseContext CreateDbContext()
     {
-        var options = new DbContextOptionsBuilder<TourDeContext>()
+        var options = new DbContextOptionsBuilder<DatabaseContext>()
             .UseInMemoryDatabase($"InMemoryTestDb-{DateTime.Now.ToFileTimeUtc()}")
             .Options;
 
-        return new TourDeContext(options);
+        return new DatabaseContext(options);
     }
 }

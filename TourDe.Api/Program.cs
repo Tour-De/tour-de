@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TourDe.Api.Routes;
-using TourDe.Data;
+using DatabaseContext = TourDe.Api.Data.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDbContext<TourDeContext>(options => { options.UseInMemoryDatabase("tourde"); });
+builder.Services.AddDbContext<DatabaseContext>(options => { options.UseInMemoryDatabase("tourde"); });
 
 var app = builder.Build();
 

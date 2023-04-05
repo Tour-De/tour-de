@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TourDe.Models;
 
-namespace TourDe.Data;
+namespace TourDe.Api.Data;
 
-public class TourDeContext: DbContext
+public class DatabaseContext: DbContext
 {
-    public TourDeContext(DbContextOptions<TourDeContext> options) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }
 
