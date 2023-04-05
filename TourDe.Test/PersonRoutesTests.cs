@@ -1,21 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using TourDe.Api.Routes;
-using TourDe.Api.Test.Helpers;
 using TourDe.Models;
 
 namespace TourDe.Api.Test;
 
-public class PersonRoutesTests
+[TestFixture]
+public class PersonRoutesTests: BaseDbContextFixture
 {
     [Test, AutoData]
     public async Task TestCreatePerson(Person person)
     {
-        await using var context = new MockTourDeDb().CreateDbContext();
-
-        var result = (CreatedResult)await PersonApi.AddPerson(context, person);
+        var result = (CreatedResult)await PersonApi.AddPerson(_databaseContext, person);
 
         result.Should().NotBeNull();
-        context.Persons.Should().HaveCount(1);
-        context.Persons.First().Should().BeSameAs(person);
+        _databaseContext.Persons.Should().HaveCount(1);
+        _databaseContext.Persons.First().Should().BeSameAs(person);
+    }
+
+    [Test, AutoData]
+    public async Task TestDeletePerson(int id)
+    {
+        var result = (NotFoundResult)await PersonApi.DeletePerson(_databaseContext, id);
+        
+        result.Should().NotBeNull();
     }
 }
