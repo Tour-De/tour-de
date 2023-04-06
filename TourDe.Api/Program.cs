@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TourDe.Api.Data;
+using TourDe.Api.Helpers;
 using TourDe.Api.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,13 +19,18 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
+
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.Converters.Add(new CustomDateTimeConverter());
+});
 
 var app = builder.Build();
 
