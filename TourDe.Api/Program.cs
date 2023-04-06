@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TourDe.Api.Data;
 using TourDe.Api.Routes;
-using DatabaseContext = TourDe.Api.Data.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +19,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 var app = builder.Build();
