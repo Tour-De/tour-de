@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TourDe.Api.Data;
 using TourDe.Models;
 
@@ -27,79 +26,67 @@ public static class PersonApi
     /// <summary>
     /// Deletes a <see cref="Person"/>.
     /// </summary>
-    /// <param name="db"></param>
+    /// <param name="repository"></param>
     /// <param name="id"></param>
     /// <returns>A <see cref="NotFoundResult"/> if the <see cref="Person"/> record doesn't exist. Otherwise <see cref="NoContentResult"/>.</returns>
-    public static async Task<ActionResult> DeletePerson(DatabaseContext db, int id)
+    public static async Task<ActionResult> DeletePerson(IPersonRepository repository, int id)
     {
-        var person = await db.Persons.FindAsync(id);
-        if (person is null)
-        {
-            return new NotFoundResult();
-        }
-
-        db.Persons.Remove(person);
-        await db.SaveChangesAsync();
-        return new NoContentResult();
+        return await repository.DeletePerson(id) ? new NoContentResult() : new NotFoundResult();
     }
 
     /// <summary>
     /// Updates the <see cref="Person"/> record.
     /// </summary>
-    /// <param name="db"></param>
+    /// <param name="repository"></param>
     /// <param name="updatePerson"></param>
     /// <param name="id"></param>
     /// <returns>A <see cref="NotFoundResult"/> if the <see cref="Person"/> record doesn't exist. Otherwise <see cref="OkObjectResult"/> containing the updated data.</returns>
-    public static async Task<ActionResult> UpdatePerson(DatabaseContext db, Person updatePerson, int id)
+    public static async Task<ActionResult> UpdatePerson(IPersonRepository repository, Person updatePerson, int id)
     {
-        var person = await db.Persons.FindAsync(id);
+        var person = await repository.UpdatePerson(updatePerson);
         if (person is null)
         {
             return new NotFoundResult();
         }
-
-        db.Persons.Entry(person).CurrentValues.SetValues(updatePerson);
-        await db.SaveChangesAsync();
         return new OkObjectResult(person);
     }
 
     /// <summary>
     /// Adds a new <see cref="Person"/> record.
     /// </summary>
-    /// <param name="db"></param>
+    /// <param name="repository"></param>
     /// <param name="person"></param>
     /// <returns>A <see cref="CreatedResult"/> containing the URI of the new person record.</returns>
-    public static async Task<ActionResult> AddPerson(DatabaseContext db, Person person)
+    public static async Task<ActionResult> AddPerson(IPersonRepository repository, Person person)
     {
-        await db.Persons.AddAsync(person);
-        await db.SaveChangesAsync();
-        return new CreatedResult("/api/person/{person.Id}", person);
+        var id = await repository.AddPerson(person);
+        return new CreatedResult($"/api/person/{id}", person);
     }
 
     /// <summary>
     /// Gets a <see cref="Person"/> by ID.
     /// </summary>
-    /// <param name="db"></param>
+    /// <param name="repository"></param>
     /// <param name="id"></param>
     /// <returns>A <see cref="NotFoundResult"/> if the <see cref="Person"/> record doesn't exist. Otherwise a <see cref="OkObjectResult"/> containing the record.</returns>
-    public static async Task<ActionResult<Person>> GetPerson(DatabaseContext db, int id)
+    public static async Task<ActionResult> GetPerson(IPersonRepository repository, int id)
     {
-        var person = await db.Persons.FindAsync(id);
+        var person = await repository.GetPerson(id);
         if (person is null)
         {
             return new NotFoundResult();
         }
 
-        return person;
+        return new OkObjectResult(person);
     }
 
     /// <summary>
     /// Gets all of the <see cref="Person"/>s.
     /// </summary>
-    /// <param name="db"></param>
+    /// <param name="repository"></param>
     /// <returns>A list of the <see cref="Person"/>s.</returns>
-    public static async Task<ActionResult<List<Person>>> GetAllPersons(DatabaseContext db)
+    public static async Task<ActionResult<List<Person>>> GetAllPersons(IPersonRepository repository)
     {
-        return await db.Persons.ToListAsync();
+        return await repository.GetAllPersons();
     }
 }
