@@ -14,5 +14,7 @@ public class DatabaseContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Person>();
+        modelBuilder.Entity<Location>();
+        modelBuilder.Entity<Assignment>();
     }
 }

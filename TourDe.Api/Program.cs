@@ -19,13 +19,14 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
-
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 
 builder.Services.Configure<JsonOptions>(options =>
 {
