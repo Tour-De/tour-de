@@ -12,7 +12,7 @@ public static class PersonApi
     /// <param name="app"></param>
     public static void MapPersonRoutes(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/persons", GetAllPersons);
+        app.MapGet("/api/people", GetAllPersons);
 
         app.MapGet("/api/person/{id}", GetPerson);
 
