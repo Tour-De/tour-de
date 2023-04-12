@@ -31,7 +31,8 @@ public static class PersonApi
     /// <returns>A <see cref="NotFoundResult"/> if the <see cref="Person"/> record doesn't exist. Otherwise <see cref="NoContentResult"/>.</returns>
     public static async Task<ActionResult> DeletePerson(IPersonRepository repository, int id)
     {
-        return await repository.DeletePerson(id) ? new NoContentResult() : new NotFoundResult();
+        await repository.DeletePerson(id);
+        return new NoContentResult();
     }
 
     /// <summary>

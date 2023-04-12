@@ -30,23 +30,11 @@ public class PersonRoutesTests
     }
 
     [Test, AutoData]
-    public async Task TestDeletePersonNotFound(int id)
-    {
-        _personRepository
-            .Setup(x => x.DeletePerson(id))
-            .ReturnsAsync(false);
-
-        var result = (NotFoundResult)await PersonApi.DeletePerson(_personRepository.Object, id);
-
-        result.Should().NotBeNull();
-    }
-
-    [Test, AutoData]
     public async Task TestDeletePerson(Person person)
     {
         _personRepository
             .Setup(x => x.DeletePerson(person.Id))
-            .ReturnsAsync(true);
+            .Returns(Task.CompletedTask);
 
         var result = (NoContentResult)await PersonApi.DeletePerson(_personRepository.Object, person.Id);
 

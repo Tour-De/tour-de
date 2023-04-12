@@ -9,7 +9,7 @@ public interface IPersonRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Task<bool> DeletePerson(int id);
+    public Task DeletePerson(int id);
 
     /// <summary>
     /// 

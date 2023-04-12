@@ -13,17 +13,10 @@ public class PersonRepository: IPersonRepository
     }
 
     /// <inheritdoc />
-    public async Task<bool> DeletePerson(int id)
+    public async Task DeletePerson(int id)
     {
-        var person = await _context.Persons.FindAsync(id);
-        if (person is null)
-        {
-            return false;
-        }
-
-        _context.Persons.Remove(person);
+        _context.Persons.Remove(new Person {Id = id});
         await _context.SaveChangesAsync();
-        return true;
     }
 
     /// <inheritdoc />
