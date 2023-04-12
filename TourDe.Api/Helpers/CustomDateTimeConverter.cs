@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TourDe.Core;
 
 namespace TourDe.Api.Helpers;
 
@@ -11,7 +12,13 @@ public class CustomDateTimeConverter : JsonConverter<DateTime>
     /// <inheritdoc />
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return DateTime.Parse(reader.GetString() ?? string.Empty);
+        var s = reader.GetString();
+        if (string.IsNullOrWhiteSpace(s))
+        {
+            throw new Exception(ExceptionMessages.InvalidDate);
+        }
+
+        return DateTime.Parse(s);
     }
 
     /// <inheritdoc />
