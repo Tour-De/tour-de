@@ -5,6 +5,7 @@ using TourDe.Api;
 using TourDe.Api.Data;
 using TourDe.Api.Helpers;
 using TourDe.Api.Routes;
+using TourDe.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Tour De",
-        Description = "Don't be a jerk",
+        Description = Descriptions.SwaggerApiDescription,
         Version = "v1"
     });
 });
