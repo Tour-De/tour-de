@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TourDe.Api.Data;
 using TourDe.Api.Routes;
+using TourDe.Core;
 using TourDe.Models;
 
 namespace TourDe.Api.Test.Routes;
@@ -57,9 +58,12 @@ public class PersonRoutesTests
     [Test, AutoData]
     public async Task TestUpdatePersonNotFound(Person person)
     {
-        var result = (NotFoundResult)await PersonApi.UpdatePerson(_personRepository.Object, person, person.Id);
+        _personRepository
+            .Setup(x => x.UpdatePerson(person))
+            .ThrowsAsync(new NotFoundException(ExceptionMessages.PersonNotFound));
 
-        result.Should().NotBeNull();
+        Func<Task> act = async () => await PersonApi.UpdatePerson(_personRepository.Object, person, person.Id);
+        await act.Should().ThrowExactlyAsync<NotFoundException>().WithMessage(ExceptionMessages.PersonNotFound);
     }
 
     [Test, AutoData]

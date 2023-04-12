@@ -45,10 +45,6 @@ public static class PersonApi
     public static async Task<ActionResult> UpdatePerson(IPersonRepository repository, Person updatePerson, int id)
     {
         var person = await repository.UpdatePerson(updatePerson);
-        if (person is null)
-        {
-            return new NotFoundResult();
-        }
         return new OkObjectResult(person);
     }
 

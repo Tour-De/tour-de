@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TourDe.Core\TourDe.Core.csproj" />
     <ProjectReference Include="..\TourDe.Models\TourDe.Models.csproj" />
   </ItemGroup>
 

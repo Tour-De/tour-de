@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TourDe.Core;
 using TourDe.Models;
 
 namespace TourDe.Api.Data;
@@ -25,7 +26,7 @@ public class PersonRepository: IPersonRepository
         var found = await _context.Persons.FindAsync(person.Id);
         if (found is null)
         {
-            return null;
+            throw new NotFoundException(ExceptionMessages.PersonNotFound);
         }
 
         _context.Persons.Entry(person).CurrentValues.SetValues(person);
