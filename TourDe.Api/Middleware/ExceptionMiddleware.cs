@@ -1,4 +1,4 @@
-namespace TourDe.Api;
+﻿namespace TourDe.Api.Middleware;
 
 public class ExceptionMiddleware: IMiddleware
 {

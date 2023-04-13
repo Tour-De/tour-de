@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TourDe.Api\TourDe.Api.csproj" />
     <ProjectReference Include="..\TourDe.Core\TourDe.Core.csproj" />
   </ItemGroup>
 

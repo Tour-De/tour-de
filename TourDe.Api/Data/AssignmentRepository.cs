@@ -1,12 +1,11 @@
-﻿namespace TourDe.Api.Data
-{
-    public class AssignmentRepository: IAssignmentRepository
-    {
-        private readonly DatabaseContext _context;
+﻿namespace TourDe.Api.Data;
 
-        public AssignmentRepository(DatabaseContext context)
-        {
-            _context = context;
-        }
+public class AssignmentRepository: IAssignmentRepository
+{
+    private readonly DatabaseContext _context;
+
+    public AssignmentRepository(DatabaseContext context)
+    {
+        _context = context;
     }
 }
