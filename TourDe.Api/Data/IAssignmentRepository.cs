@@ -1,6 +1,5 @@
-﻿namespace TourDe.Api.Data
+﻿namespace TourDe.Api.Data;
+
+public interface IAssignmentRepository
 {
-    public interface IAssignmentRepository
-    {
-    }
 }
