@@ -1,20 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using TourDe.Api.Controllers;
 using TourDe.Api.Data;
-using TourDe.Api.Routes;
 using TourDe.Core;
 using TourDe.Models;
 
-namespace TourDe.Api.Test.Routes;
+namespace TourDe.Api.Test.Controllers;
 
 [TestFixture]
-public class PersonRoutesTests
+public class PersonControllerTests
 {
-    private readonly Mock<IPersonRepository> _personRepository;
-
-    public PersonRoutesTests()
+    private Mock<IPersonRepository> _personRepository;
+    private PersonController _personController;
+    
+    [SetUp]
+    public void Init()
     {
         _personRepository = new Mock<IPersonRepository>();
+        _personController = new PersonController(_personRepository.Object);
+    }
+
+    [TearDown]
+    public void Cleanup()
+    {
+        Mock.VerifyAll(_personRepository);
     }
 
     [Test, AutoData]
@@ -24,7 +33,7 @@ public class PersonRoutesTests
             .Setup(x => x.AddPerson(person))
             .ReturnsAsync(insertedId);
 
-        var result = (CreatedResult)await PersonApi.AddPerson(_personRepository.Object, person);
+        var result = (CreatedResult)await _personController.AddPerson(person);
 
         result.Should().NotBeNull();
         result.Location.Should().Be($"/api/person/{insertedId}");
@@ -37,7 +46,7 @@ public class PersonRoutesTests
             .Setup(x => x.DeletePerson(person.Id))
             .Returns(Task.CompletedTask);
 
-        var result = (NoContentResult)await PersonApi.DeletePerson(_personRepository.Object, person.Id);
+        var result = (NoContentResult)await _personController.DeletePerson(person.Id);
 
         result.Should().NotBeNull();
     }
@@ -49,7 +58,7 @@ public class PersonRoutesTests
             .Setup(x => x.UpdatePerson(person))
             .ReturnsAsync(person);
 
-        var result = (OkObjectResult)await PersonApi.UpdatePerson(_personRepository.Object, person, person.Id);
+        var result = (OkObjectResult)await _personController.UpdatePerson(person);
 
         result.Should().NotBeNull();
         result.Value.Should().BeSameAs(person);
@@ -62,7 +71,7 @@ public class PersonRoutesTests
             .Setup(x => x.UpdatePerson(person))
             .ThrowsAsync(new NotFoundException(ExceptionMessages.PersonNotFound));
 
-        Func<Task> act = async () => await PersonApi.UpdatePerson(_personRepository.Object, person, person.Id);
+        Func<Task> act = async () => await _personController.UpdatePerson(person);
         await act.Should().ThrowExactlyAsync<NotFoundException>().WithMessage(ExceptionMessages.PersonNotFound);
     }
 
@@ -73,7 +82,7 @@ public class PersonRoutesTests
             .Setup(x => x.GetPerson(person.Id))
             .ReturnsAsync(person);
 
-        var result = (OkObjectResult)await PersonApi.GetPerson(_personRepository.Object, person.Id);
+        var result = (OkObjectResult)await _personController.GetPerson(person.Id);
 
         result.Should().NotBeNull();
         result.Value.Should().BeSameAs(person);
@@ -86,7 +95,7 @@ public class PersonRoutesTests
             .Setup(x => x.GetPerson(id))
             .ReturnsAsync(default(Person?));
 
-        var result = (NotFoundResult)await PersonApi.GetPerson(_personRepository.Object, id);
+        var result = (NotFoundResult)await _personController.GetPerson(id);
 
         result.Should().NotBeNull();
     }
@@ -98,10 +107,12 @@ public class PersonRoutesTests
             .Setup(x => x.GetAllPersons())
             .ReturnsAsync(new List<Person>());
 
-        var result = await PersonApi.GetAllPersons(_personRepository.Object);
+        var result = await _personController.GetAllPersons();
 
         result.Should().NotBeNull();
-        result.Value.Should().BeEmpty();
+        result.Should().BeOfType<OkObjectResult>();
+        var objectResult = (OkObjectResult)result;
+        objectResult.Value.Should().BeOfType<List<Person>>().Which.Should().BeEmpty();
     }
 
     [Test, AutoData]
@@ -111,9 +122,11 @@ public class PersonRoutesTests
             .Setup(x => x.GetAllPersons())
             .ReturnsAsync(persons);
 
-        var result = await PersonApi.GetAllPersons(_personRepository.Object);
+        var result = await _personController.GetAllPersons();
 
         result.Should().NotBeNull();
-        result.Value.Should().BeEquivalentTo(persons);
+        result.Should().BeOfType<OkObjectResult>();
+        var objectResult = (OkObjectResult)result;
+        objectResult.Value.Should().BeOfType<List<Person>>().Which.Count.Should().Be(persons.Count);
     }
 }
