@@ -50,7 +50,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> AddPerson(Person person)
     {
         var id = await _personRepository.AddPerson(person);
-        return new CreatedAtRouteResult(Url.RouteUrl(id), id);
+        return new CreatedAtActionResult(nameof(GetPerson), nameof(PersonController), new { id }, id);
     }
 
     /// <summary>
