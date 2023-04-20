@@ -31,6 +31,10 @@ public class PersonControllerTests
     {
         _personRepository
             .Setup(x => x.AddPerson(person))
+            .Callback<Person>(p =>
+            {
+                p.Id = insertedId;
+            })
             .ReturnsAsync(insertedId);
 
         var result = await _personController.AddPerson(person);
@@ -38,7 +42,6 @@ public class PersonControllerTests
         result.Should().NotBeNull();
         result.Should().BeOfType<CreatedAtActionResult>();
         var createdAtActionResult = (CreatedAtActionResult)result;
-        createdAtActionResult.ControllerName.Should().Be(nameof(PersonController));
         createdAtActionResult.ActionName.Should().Be(nameof(PersonController.GetPerson));
         createdAtActionResult.RouteValues!.Single(x => x.Key == "id").Value.Should().Be(insertedId);
     }

@@ -49,8 +49,8 @@ public class PersonController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddPerson(Person person)
     {
-        var id = await _personRepository.AddPerson(person);
-        return new CreatedAtActionResult(nameof(GetPerson), nameof(PersonController), new { id }, id);
+        await _personRepository.AddPerson(person);
+        return CreatedAtAction(nameof(GetPerson), new { id = person.Id }, person);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class PersonController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetPerson")]
     [Authorize(Policies.ReadPersonPolicyName)]
     public async Task<IActionResult> GetPerson(int id)
     {

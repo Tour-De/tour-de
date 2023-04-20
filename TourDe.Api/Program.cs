@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TourDe.Api.Authorization;
 using TourDe.Api.Data;
+using TourDe.Api.Helpers;
 using TourDe.Api.Middleware;
 using TourDe.Core;
 
@@ -40,7 +42,10 @@ builder.Services.AddAuthorization(options =>
         policy => policy.Requirements.Add(new HasScopeRequirement(Policies.ReadPersonPolicyName, auth0Domain)));
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new CustomDateTimeConverter());
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -66,12 +71,6 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 builder.Services.AddSingleton<ExceptionMiddleware>();
-
-// TODO: determine if this is still necessary after moving away from minimal api 
-//builder.Services.Configure<JsonOptions>(options =>
-//{
-//    options.SerializerOptions.Converters.Add(new CustomDateTimeConverter());
-//});
 
 var app = builder.Build();
 
