@@ -59,6 +59,7 @@ public class PersonController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [Authorize(Policies.ReadPersonPolicyName)]
     public async Task<IActionResult> GetPerson(int id)
     {
         var person = await _personRepository.GetPerson(id);

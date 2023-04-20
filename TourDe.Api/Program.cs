@@ -67,8 +67,6 @@ builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
-builder.Services.AddHostedService<TestHostedService>();
-
 // TODO: determine if this is still necessary after moving away from minimal api 
 //builder.Services.Configure<JsonOptions>(options =>
 //{
@@ -97,12 +95,3 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();
-
-
-public class TestHostedService : BackgroundService
-{
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        Console.WriteLine("this is a test");
-    }
-}
