@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TourDe.Api.Authorization;
 using TourDe.Api.Data;
 using TourDe.Models;
 
 namespace TourDe.Api.Controllers;
 
-public class PersonController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class PersonController : ControllerBase
 {
     private readonly IPersonRepository _personRepository;
 
@@ -18,7 +22,7 @@ public class PersonController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("/api/person/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePerson(int id)
     {
         await _personRepository.DeletePerson(id);
@@ -30,7 +34,7 @@ public class PersonController : Controller
     /// </summary>
     /// <param name="updatePerson"></param>
     /// <returns></returns>
-    [HttpPut("/api/person")]
+    [HttpPut]
     public async Task<IActionResult> UpdatePerson(Person updatePerson)
     {
         var person = await _personRepository.UpdatePerson(updatePerson);
@@ -42,11 +46,11 @@ public class PersonController : Controller
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    [HttpPost("/api/person")]
+    [HttpPost]
     public async Task<IActionResult> AddPerson(Person person)
     {
         var id = await _personRepository.AddPerson(person);
-        return new CreatedResult($"/api/person/{id}", person);
+        return new CreatedAtRouteResult(Url.RouteUrl(id), id);
     }
 
     /// <summary>
@@ -54,7 +58,7 @@ public class PersonController : Controller
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("/api/person/{id}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetPerson(int id)
     {
         var person = await _personRepository.GetPerson(id);
@@ -70,7 +74,8 @@ public class PersonController : Controller
     /// Gets all of the <see cref="Person"/>s.
     /// </summary>
     /// <returns></returns>
-    [HttpGet("/api/people")]
+    [HttpGet]
+    [Authorize(Policies.ReadPersonPolicyName)]
     public async Task<IActionResult> GetAllPersons()
     {
         var people = await _personRepository.GetAllPersons();
