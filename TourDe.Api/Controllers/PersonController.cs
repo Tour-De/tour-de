@@ -26,7 +26,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> DeletePerson(int id)
     {
         await _personRepository.DeletePerson(id);
-        return new NoContentResult();
+        return NoContent();
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> UpdatePerson(Person updatePerson)
     {
         var person = await _personRepository.UpdatePerson(updatePerson);
-        return new OkObjectResult(person);
+        return Ok(person);
     }
 
     /// <summary>
@@ -65,10 +65,10 @@ public class PersonController : ControllerBase
         var person = await _personRepository.GetPerson(id);
         if (person is null)
         {
-            return new NotFoundResult();
+            return NotFound();
         }
 
-        return new OkObjectResult(person);
+        return Ok(person);
     }
 
     /// <summary>
@@ -80,6 +80,6 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> GetAllPersons()
     {
         var people = await _personRepository.GetAllPersons();
-        return new OkObjectResult(people);
+        return Ok(people);
     }
 }
