@@ -8,21 +8,21 @@ const NavBar = () => {
     const { isAuthenticated } = useAuth0();
 
     return (
-        <Navbar collapseOnSelect className="p-3">
+        <Navbar collapseOnSelect className="p-3 nav-header">
             <Container>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <LinkContainer to="/"><Button>Home</Button></LinkContainer>
-                        <LinkContainer to="/leaderboards"><Button>Leaderboards</Button></LinkContainer>
-                        <LinkContainer to="/about"><Button>About</Button></LinkContainer>
-                        <LinkContainer to="/media"><Button>Media</Button></LinkContainer>
-                        <LinkContainer to="/join"><Button>Join</Button></LinkContainer>
-                        <LinkContainer to="/contact"><Button>Contact</Button></LinkContainer>
+                        <LinkContainer to="/"><Button className="btn-nav">Home</Button></LinkContainer>
+                        <LinkContainer to="/leaderboards"><Button className="btn-nav">Leaderboards</Button></LinkContainer>
+                        <LinkContainer to="/about"><Button className="btn-nav">About</Button></LinkContainer>
+                        <LinkContainer to="/media"><Button className="btn-nav">Media</Button></LinkContainer>
+                        <LinkContainer to="/join"><Button className="btn-nav">Join</Button></LinkContainer>
+                        <LinkContainer to="/contact"><Button className="btn-nav">Contact</Button></LinkContainer>
                     </Nav>
                     <Nav className="gap-2">
                         {isAuthenticated ? 
                             <>
-                                <LinkContainer to="/profile"><Button>Profile</Button></LinkContainer>
+                                <LinkContainer to="/profile"><Button className="btn-nav">Profile</Button></LinkContainer>
                                 <LogoutButton/>
                             </>:
                             <LoginButton/>

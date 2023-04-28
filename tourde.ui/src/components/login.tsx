@@ -7,7 +7,7 @@ const LoginButton = () => {
 
   return (
     <LinkContainer to="">
-      <Button onClick={() => loginWithRedirect()}>Log In/Sign Up</Button>
+      <Button className="btn-nav" onClick={() => loginWithRedirect()}>Log In/Sign Up</Button>
     </LinkContainer>
   );
 };

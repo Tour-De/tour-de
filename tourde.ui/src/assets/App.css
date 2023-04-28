@@ -145,9 +145,16 @@ h1, h2 {
   background: transparent;
 }
 
-nav {
+.nav-header {
+  margin-left: 100px;
+  margin-top: -60px;
   display: flex;
   justify-content: space-between;
-  padding-left: 100px;
-  margin-top: -40px;
+}
+
+.btn-nav {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px 20px;
 }

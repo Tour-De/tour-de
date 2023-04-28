@@ -7,7 +7,7 @@ const LogoutButton = () => {
 
   return (
       <LinkContainer to="">
-        <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</Button>
+        <Button className="btn-nav" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</Button>
       </LinkContainer>
   );
 };
