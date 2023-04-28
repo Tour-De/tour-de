@@ -1,0 +1,153 @@
+div {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.countdown {
+  width: 300px;
+  background: #1a1a1a;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: #ccc;
+  border: 1px solid #000;
+  align-self: start
+}
+
+@media screen and (max-device-width: 767px),(max-width: 767px) {
+  .countdown {
+      display: none
+  }
+}
+
+.countdown p {
+  margin: 0 0 0px 10px
+}
+
+.countdown #day,.countdown #hours,.countdown #minutes,.countdown #seconds {
+  float: left;
+  width: 50px;
+  text-align: right;
+  line-height: .9;
+  margin: 2px 14px 6px 0;
+  color: #fff
+}
+
+.countdown #day {
+  width: 80px;
+  margin-left: 6px
+}
+
+.countdownValue {
+  float: right;
+  color: #fff;
+  font-size: 3em;
+  font-weight: normal
+}
+
+body {  
+  font: normal 14px Futura, Helvetica, Arial, sans-serif;
+  margin: 0;
+  align-content: center;
+  background: linear-gradient(#1a1a1a 0px, #f1f1f1 350px);
+  background-repeat: no-repeat;
+  height: auto;
+}
+
+.countdown span {
+  clear: right;
+  float: right
+}
+
+header {
+  background: transparent url('@assets/header.png') no-repeat 50% 0%;
+  padding: 0 20px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+}
+
+.rw24-logo {
+  background: transparent url('@assets/logo.svg') no-repeat 50% 0%;
+  background-size: contain;
+  width: 125px;
+  height: 125px;
+  display: inline-block;
+}
+
+.title {
+  display: inline-block;
+  margin-top: 10px;
+  line-height: 1em;
+  width: 550px;
+}
+
+.title h1, .title h2 {
+  display: inline-block;
+  color: #fff;
+  line-height: 0.9em;
+}
+
+.title h2 {
+  margin-right: 3px;
+}
+
+.title span {
+  font-size: 1.2em;
+  line-height: .8;
+  font-weight: bold;
+  text-shadow: 0px 0px 3px #000;
+  color: #ffc81f;
+}
+
+ul,ol,li,ul li,ol li,h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0
+}
+
+h1 {
+  font-size: 3.5em;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+h1, h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+}
+
+.btn.active {
+  background: transparent;
+}
+
+.btn:hover {
+  background: transparent;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 100px;
+  margin-top: -40px;
+}
