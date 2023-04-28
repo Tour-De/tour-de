@@ -2,6 +2,10 @@ div {
   display: block;
 }
 
+html {
+  height: 100%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -53,12 +57,12 @@ p {
 }
 
 body {  
+  color: #202020;
   font: normal 14px Futura, Helvetica, Arial, sans-serif;
   margin: 0;
-  align-content: center;
   background: linear-gradient(#1a1a1a 0px, #f1f1f1 350px);
   background-repeat: no-repeat;
-  height: auto;
+  height: 100%;
 }
 
 .countdown span {
@@ -157,4 +161,10 @@ h1, h2 {
   font-weight: bold;
   text-transform: uppercase;
   padding: 10px 20px;
+}
+
+@media screen and (max-width: 1010px) {
+  .countdown {
+    display: none;
+  }
 }
