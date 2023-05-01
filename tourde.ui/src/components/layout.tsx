@@ -1,15 +1,17 @@
 import Header from "@components/header";
-import { Container } from "react-bootstrap";
 import Sidebar from "@components/sidebar";
+import { Col, Container, Row, Stack } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
     return (
         <>
             <Header/>
-            <Container className="content">
-                <Outlet/>
-                <Sidebar/>
+            <Container fluid className="main">
+                <Stack direction="horizontal">
+                    <Outlet/>
+                    <Sidebar/>
+                </Stack>
             </Container>
         </>
     );

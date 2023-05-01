@@ -1,10 +1,11 @@
+import Article from "@components/article";
 import { Container } from "react-bootstrap";
 
 const Home = () => {
 
     return (
-        <Container>
-            Welcome!
+        <Container className="main">
+            <Article/>
         </Container>
     );
 }

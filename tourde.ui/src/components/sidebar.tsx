@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 
 const intagramRawHtml = `
 <blockquote 
@@ -69,9 +70,9 @@ const intagramRawHtml = `
             <script async src="http://www.instagram.com/embed.js"></script>`;
 const Sidebar = () => {
     return (
-        <div>
+        <Container className="aside">
             <div dangerouslySetInnerHTML={{__html: intagramRawHtml}}/>
-        </div>
+        </Container>
     );
 }
 

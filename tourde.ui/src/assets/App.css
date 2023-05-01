@@ -1,13 +1,22 @@
-div {
-  display: block;
+* {
+  box-sizing: border-box;
 }
 
 html {
   height: 100%;
 }
 
-* {
-  box-sizing: border-box;
+body {  
+  color: #202020;
+  font: normal 14px Futura, Helvetica, Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(#1a1a1a 0px, #f1f1f1 350px);
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+div {
+  display: block;
 }
 
 p {
@@ -23,12 +32,6 @@ p {
   color: #ccc;
   border: 1px solid #000;
   align-self: start
-}
-
-@media screen and (max-device-width: 767px),(max-width: 767px) {
-  .countdown {
-      display: none
-  }
 }
 
 .countdown p {
@@ -56,18 +59,15 @@ p {
   font-weight: normal
 }
 
-body {  
-  color: #202020;
-  font: normal 14px Futura, Helvetica, Arial, sans-serif;
-  margin: 0;
-  background: linear-gradient(#1a1a1a 0px, #f1f1f1 350px);
-  background-repeat: no-repeat;
-  height: 100%;
-}
-
 .countdown span {
   clear: right;
   float: right
+}
+
+@media screen and (max-width: 1010px) {
+  .countdown {
+    display: none;
+  }
 }
 
 header {
@@ -163,8 +163,18 @@ h1, h2 {
   padding: 10px 20px;
 }
 
-@media screen and (max-width: 1010px) {
-  .countdown {
-    display: none;
-  }
+.article {
+  background: #fff;
+  box-shadow: #ccc 0 0 3px;
+  min-height: 360px;
+  padding: 20px 40px;
+  margin-bottom: 20px;
+}
+
+.main {
+  width: 69%;
+}
+
+.aside {
+  width: 30%;
 }
