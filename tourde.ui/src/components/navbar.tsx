@@ -8,7 +8,7 @@ const NavBar = () => {
     const { isAuthenticated } = useAuth0();
 
     return (
-        <Navbar collapseOnSelect className="p-3 nav-header">
+        <Navbar collapseOnSelect className="p-3 nav-header" expand={"md"}>
             <Container>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

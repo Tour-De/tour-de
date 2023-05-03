@@ -13,6 +13,7 @@ body {
   background: linear-gradient(#1a1a1a 0px, #f1f1f1 350px);
   background-repeat: no-repeat;
   height: 100%;
+  background-attachment: fixed;
 }
 
 div {
@@ -72,7 +73,7 @@ p {
 
 header {
   background: transparent url('@assets/header.png') no-repeat 50% 0%;
-  padding: 0 20px;
+  padding: 0px 20px 20px 20px;
 }
 
 .header-top {
@@ -85,11 +86,17 @@ header {
 }
 
 .rw24-logo {
-  background: transparent url('@assets/logo.svg') no-repeat 50% 0%;
+  background: transparent url('@assets/logo.svg') no-repeat 50% 50%;
   background-size: contain;
   width: 125px;
   height: 125px;
   display: inline-block;
+}
+
+@media screen and (max-device-width: 767px), (max-width: 767px) {
+    .rw24-logo {
+      display: none;
+  }
 }
 
 .title {
@@ -172,9 +179,21 @@ h1, h2 {
 }
 
 .main {
-  width: 69%;
+  width: 69%; /* nice */
+}
+
+@media screen and (max-width: 1010px) {
+  .main {
+    width: 80%;
+  }
 }
 
 .aside {
   width: 30%;
+}
+
+@media screen and (max-width: 1010px) {
+  .aside {
+    display: none;
+  }
 }
