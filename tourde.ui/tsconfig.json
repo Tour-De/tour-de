@@ -25,7 +25,8 @@
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
-      "@util/*": ["util/*"]
+      "@util/*": ["util/*"],
+      "@models/*": ["models/*"]
     }
   },
   "include": [

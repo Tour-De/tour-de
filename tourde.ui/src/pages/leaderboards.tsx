@@ -1,8 +1,33 @@
-const Leaderboards = () => {
-    return (
-        <div>
+import { Constants } from "@util/constants";
+import { Person } from "@models/person";
+import { Table } from "react-bootstrap";
+import { useApi } from "@hooks/useApi";
 
-        </div>
+const Leaderboards = () => {    
+    const { loading, data } = useApi<Array<Person>>(Constants.GET_PEOPLE);
+
+    if (loading || !data) {
+        return <div>Loading...</div>
+    }
+
+    return (
+        <Table>
+            <tbody>
+                {
+                    data.map((person: Person, index: number) => {
+                        return (
+                            <tr key={index}>
+                                <td>{person.firstName}</td>
+                                <td>{person.lastName}</td>
+                                <td>{person.email}</td>
+                                <td>{person.phone}</td>
+                                <td>{person.dateOfBirth}</td>
+                            </tr>
+                        );
+                    })
+                }
+            </tbody>
+        </Table>
     );
 }
 
