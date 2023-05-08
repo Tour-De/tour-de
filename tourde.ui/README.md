@@ -11,3 +11,4 @@ You should add a `.env` file with configuration specific to your event. Then run
 * `REACT_APP_RACE_END` - race end time in the format `yyyy-MM-ddThh:mm`
 * `REACT_APP_TIMEZONE` - timezone (ex: 'America/Chicago')
 * `REACT_APP_SITE_TITLE` - title to appear on the browser tab
+* `REACT_APP_API_BASE_URI` - base URI where the API lives, e.g: "https://tourde.org/api/"
