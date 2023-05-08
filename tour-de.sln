@@ -9,17 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Ui", "TourDe.Ui\TourDe.Ui.csproj", "{8F6B1328-D87A-46FB-A961-7994D71E41D9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Models", "TourDe.Models\TourDe.Models.csproj", "{67871F76-A0A2-4743-A194-6E5E6069D3AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{933B70E6-8925-4417-ADA2-F0B7583DB807}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Api.Test", "TourDe.Test\TourDe.Api.Test.csproj", "{9B88C107-990A-47C5-874A-818C11144AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourDe.Core", "TourDe.Core\TourDe.Core.csproj", "{A7556205-4AF5-42F3-A44A-0489F3CCEB6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Core", "TourDe.Core\TourDe.Core.csproj", "{A7556205-4AF5-42F3-A44A-0489F3CCEB6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourDe.Api", "TourDe.Api\TourDe.Api.csproj", "{4FD80988-5331-4779-B8F9-E14825E10990}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Api", "TourDe.Api\TourDe.Api.csproj", "{4FD80988-5331-4779-B8F9-E14825E10990}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,12 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F6B1328-D87A-46FB-A961-7994D71E41D9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{67871F76-A0A2-4743-A194-6E5E6069D3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67871F76-A0A2-4743-A194-6E5E6069D3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67871F76-A0A2-4743-A194-6E5E6069D3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -31,12 +31,19 @@ public class PersonControllerTests
     {
         _personRepository
             .Setup(x => x.AddPerson(person))
+            .Callback<Person>(p =>
+            {
+                p.Id = insertedId;
+            })
             .ReturnsAsync(insertedId);
 
-        var result = (CreatedResult)await _personController.AddPerson(person);
+        var result = await _personController.AddPerson(person);
 
         result.Should().NotBeNull();
-        result.Location.Should().Be($"/api/person/{insertedId}");
+        result.Should().BeOfType<CreatedAtActionResult>();
+        var createdAtActionResult = (CreatedAtActionResult)result;
+        createdAtActionResult.ActionName.Should().Be(nameof(PersonController.GetPerson));
+        createdAtActionResult.RouteValues!.Single(x => x.Key == "id").Value.Should().Be(insertedId);
     }
 
     [Test, AutoData]
