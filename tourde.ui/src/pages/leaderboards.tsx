@@ -4,9 +4,13 @@ import { Table } from "react-bootstrap";
 import { useApi } from "@hooks/useApi";
 
 const Leaderboards = () => {    
-    const { loading, data } = useApi<Array<Person>>(Constants.GET_PEOPLE);
+    const { loading, data, error } = useApi<Array<Person>>(Constants.GET_PEOPLE);
 
-    if (loading || !data) {
+    if (error) {
+        return <div>Error: {error.message}</div>
+    }
+
+    if (loading) {
         return <div>Loading...</div>
     }
 
@@ -14,7 +18,7 @@ const Leaderboards = () => {
         <Table>
             <tbody>
                 {
-                    data.map((person: Person, index: number) => {
+                    data!.map((person: Person, index: number) => {
                         return (
                             <tr key={index}>
                                 <td>{person.firstName}</td>

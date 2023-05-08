@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 
 export interface ApiResult<T> {
   loading: boolean,
-  data: T | undefined
+  data: T | undefined,
+  error: Error | undefined,
 }
 
 /**
@@ -14,6 +15,7 @@ export interface ApiResult<T> {
 export function useApi<T>(url: string): ApiResult<T> {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
+  const [error, setError] = useState<Error>();
   const { getAccessTokenSilently }  = useAuth0();
   const fullUrl = process.env.REACT_APP_API_BASE_URI + url;
 
@@ -31,6 +33,9 @@ export function useApi<T>(url: string): ApiResult<T> {
         .then((json: T) => {
           setLoading(false);
           setData(json);
+        })
+        .catch((err: Error) => {
+          setError(err);
         });
     })
     
@@ -40,5 +45,5 @@ export function useApi<T>(url: string): ApiResult<T> {
     fetchApi();
   }, [/* empty dependencies to only run when parent component mounts */]);
 
-  return { loading, data };
+  return { loading, data, error };
 };
