@@ -4,7 +4,7 @@ import '@assets/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from '@util/reportWebVitals';
-import { AppState, Auth0Provider, User, useAuth0 } from '@auth0/auth0-react';
+import { AppState, Auth0Provider, User } from '@auth0/auth0-react';
 import { ThemeProvider } from 'react-bootstrap';
 import { PersonApiRoutes } from '@util/constants';
 import { Person } from '@models/person';

@@ -1,6 +1,6 @@
 import Header from "@components/header";
 import Sidebar from "@components/sidebar";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Container, Stack } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {

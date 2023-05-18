@@ -42,7 +42,7 @@ export function useApi<T>(url: string, method: string = "GET"): ApiResult<T> {
 
   useEffect(() => {
     fetchApi();
-  }, [/* empty dependencies to only run when parent component mounts */]);
+  });
 
   return { loading, data, error };
 };
