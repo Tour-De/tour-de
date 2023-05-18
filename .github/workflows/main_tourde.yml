@@ -38,7 +38,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ui-deploy-artifact
-          path: build
+          path: ./tourde.ui/build
+          if-no-files-found: error
 
   deploy:
     name: Deploy to Azure
