@@ -10,7 +10,7 @@ const Profile = () => {
     .then(claims => {
       setIdToken(claims);
     });
-  }, []);
+  }, [getIdTokenClaims]);
 
   if (!isAuthenticated) {
     return (
