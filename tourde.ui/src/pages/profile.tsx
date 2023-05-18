@@ -1,14 +1,22 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "@components/login";
+import { IdToken, useAuth0 } from "@auth0/auth0-react";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, getIdTokenClaims } = useAuth0();
+  const [ idToken, setIdToken ] = useState<IdToken>();
+
+  useEffect(() => {
+    getIdTokenClaims()
+    .then(claims => {
+      setIdToken(claims);
+    });
+  }, []);
 
   if (!isAuthenticated) {
     return (
       <div>
         <h3>You are not logged in.</h3>
-        <LoginButton/>
+        <h4>Please login or signup.</h4>
       </div>
     );
   }
@@ -19,6 +27,12 @@ const Profile = () => {
       <div>
           <img src={user.picture} alt={user.name} />
           <h2>Hello, {user.name}</h2>
+          <pre>
+            {JSON.stringify(user, null, 2)}
+          </pre>
+          <pre>
+            {JSON.stringify(idToken, null, 2)}
+          </pre>
       </div> }
     </div>
   );

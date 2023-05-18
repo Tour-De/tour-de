@@ -8,6 +8,7 @@ module.exports = {
         '@hooks': path.resolve(__dirname, 'src/hooks/'),
         '@pages': path.resolve(__dirname, 'src/pages/'),
         '@util': path.resolve(__dirname, 'src/util/'),
+        '@models': path.resolve(__dirname, 'src/models/'),
     },
   },
   jest: {
@@ -18,6 +19,7 @@ module.exports = {
         '^@hooks(.*)$': '<rootDir>/src/hooks$1',
         '^@pages(.*)$': '<rootDir>/src/pages$1',
         '^@util(.*)$': '<rootDir>/src/util$1',
+        '^@models(.*)$': '<rootDir>/src/models$1',
       },
     },
   },

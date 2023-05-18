@@ -54,4 +54,10 @@ public class PersonRepository: IPersonRepository
     {
         return await _context.Persons.ToListAsync();
     }
+
+    /// <inheritdoc />
+    public async Task<Person> GetPersonByEmail(string email)
+    {
+        return await _context.Persons.FirstOrDefaultAsync(p => p.Email == email);
+    }
 }
