@@ -37,4 +37,11 @@ public interface IPersonRepository
     /// </summary>
     /// <returns>A <see cref="List{T}"/> of <see cref="Person"/>s.</returns>
     public Task<List<Person>> GetAllPersons();
+
+    /// <summary>
+    /// Gets the person with the given email address.
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public Task<Person> GetPersonByEmail(string email);
 }

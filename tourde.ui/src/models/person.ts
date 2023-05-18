@@ -4,9 +4,9 @@ export class Person implements Serializable<Person>
         public id: number,
         public firstName: string,
         public lastName: string,
-        public dateOfBirth: string,
         public email: string,
-        public phone: string
+        public phone?: string,
+        public dateOfBirth?: string,
     ) {
     }
 
@@ -14,9 +14,9 @@ export class Person implements Serializable<Person>
         this.id = input.id;
         this.firstName = input.firstName;
         this.lastName = input.lastName;
-        this.dateOfBirth = input.dateOfBirth;
         this.email = input.email;
         this.phone = input.phone;
+        this.dateOfBirth = input.dateOfBirth;
         return this;
     }
 }
