@@ -26,6 +26,10 @@ jobs:
           node-version: '18.x'
           cache: 'npm'
           cache-dependency-path: 'tourde.ui/package-lock.json'
+          
+      - name: Create .env secrets file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .toude.ui/.env
 
       - name: npm install, build, and test
         run: |
