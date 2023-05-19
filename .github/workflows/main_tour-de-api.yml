@@ -23,9 +23,15 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
+          
+      - name: Install dependencies
+        run: dotnet restore
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        
+      - name: Test with dotnet
+        run: dotnet test
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/tourdeapi
