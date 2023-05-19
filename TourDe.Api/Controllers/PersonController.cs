@@ -47,10 +47,17 @@ public class PersonController : ControllerBase
     /// <param name="person"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> AddPerson(Person person)
     {
-        await _personRepository.AddPerson(person);
-        return CreatedAtAction(nameof(GetPerson), new { id = person.Id }, person);
+        var existingPerson = await _personRepository.GetPersonByEmail(person.Email);
+        if (existingPerson == null)
+        {
+            await _personRepository.AddPerson(person);
+            existingPerson = person;
+        }
+
+        return CreatedAtAction(nameof(GetPerson), new { id = existingPerson.Id }, existingPerson);
     }
 
     /// <summary>
@@ -81,5 +88,17 @@ public class PersonController : ControllerBase
     {
         var people = await _personRepository.GetAllPersons();
         return Ok(people);
+    }
+
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetPersonByEmail(string email)
+    {
+        var person = await _personRepository.GetPersonByEmail(email);
+        if (person is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(person);
     }
 }
