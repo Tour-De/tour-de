@@ -1,16 +1,19 @@
-import { PersonApiRoutes } from "@util/constants";
+import { LeaderboardApiRoutes } from "@util/constants";
 import { Person } from "@models/person";
 import { Table } from "react-bootstrap";
-import { useApi } from "@hooks/useApi";
+import { useFetch } from 'use-http';
 
 const Leaderboards = () => {
-    const { data, loading, error } = useApi<Person[]>(PersonApiRoutes.GET_ALL);
-
+    const urlBuilder = new URL(process.env.REACT_APP_API_BASE_URI!);
+    urlBuilder.pathname = LeaderboardApiRoutes.GET_LEADERBOARD;  
+    const options = { method: 'GET' };
+    const { data = [], loading, error } = useFetch<Array<Person>>(urlBuilder.toString(), options, []);
+    
     if (error) {
         return <div>Error: {error.message}</div>
     }
 
-    if (loading || !data) {
+    if (loading) {
         return <div>Loading...</div>
     }
 
@@ -18,7 +21,7 @@ const Leaderboards = () => {
         <Table>
             <tbody>
                 {
-                    data!.map((person: Person, index: number) => {
+                    data.map((person: Person, index: number) => {
                         return (
                             <tr key={index}>
                                 <td>{person.firstName}</td>

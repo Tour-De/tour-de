@@ -1,5 +1,9 @@
 export enum PersonApiRoutes {
-    GET_ALL = "PERSON",
-    GET_BY_EMAIL = "PERSON/EMAIL/",
-    ADD_PERSON = "PERSON",
+    GET_ALL = "api/person",
+    GET_BY_EMAIL = "api/person/email/",
+    ADD_PERSON = "api/person",
+}
+
+export enum LeaderboardApiRoutes {
+    GET_LEADERBOARD = "api/leaderboard",
 }

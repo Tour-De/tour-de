@@ -13,16 +13,17 @@ export interface ApiResult<T> {
  * @returns 
  */
 export function useApi<T>(url: string, method: string = "GET"): ApiResult<T> {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<T>();
-  const [error, setError] = useState<any>();
+  const [err, setError] = useState<any>();
   const {getAccessTokenSilently}  = useAuth0();
-  const fullUrl = process.env.REACT_APP_API_BASE_URI + url;
+  const urlBuilder = new URL(process.env.REACT_APP_API_BASE_URI!);
+  urlBuilder.pathname = url;
 
   const fetchApi = () => {
     getAccessTokenSilently()
     .then(access_token => 
-        fetch(fullUrl, {
+        fetch(urlBuilder.href, {
             method: method, 
             headers: {
                 'Authorization': `Bearer ${access_token}`,
@@ -42,7 +43,7 @@ export function useApi<T>(url: string, method: string = "GET"): ApiResult<T> {
 
   useEffect(() => {
     fetchApi();
-  });
+  }, []);
 
-  return { loading, data, error };
+  return { loading: isLoading, data, error: err };
 };
