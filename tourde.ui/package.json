@@ -34,7 +34,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --passWithNoTests",
-    "eject": "craco eject"
+    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\"" 
   },
   "eslintConfig": {
     "extends": [

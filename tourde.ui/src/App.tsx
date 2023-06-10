@@ -14,19 +14,19 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout/>}>
-          <Route path="/" element={<Home/>}/>
-          <Route path="profile" element={<Profile/>}/>
-          <Route path="about" element={<About/>}/>
-          <Route path="contact" element={<Contact/>}/>
-          <Route path="join" element={<Join/>}/>
-          <Route path="leaderboards" element={<Leaderboards/>}/>
-          <Route path="media" element={<Media/>}/>
-          <Route path="*" element={<NotFound/>}/>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="join" element={<Join />} />
+          <Route path="leaderboards" element={<Leaderboards />} />
+          <Route path="media" element={<Media />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
