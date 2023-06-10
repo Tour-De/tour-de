@@ -8,9 +8,9 @@ const Leaderboards = () => {
   urlBuilder.pathname = LeaderboardApiRoutes.GET_LEADERBOARD;
   const options = { method: 'GET' };
   const {
+    data = [],
     loading,
     error,
-    data = [],
   } = useFetch<Array<Person>>(urlBuilder.toString(), options, []);
 
   if (error) {
