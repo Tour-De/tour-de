@@ -1,3 +1,5 @@
+import { Serializable } from "@util/iserializable";
+
 export class Person implements Serializable<Person> {
   constructor(
     public id: number,
@@ -19,6 +21,3 @@ export class Person implements Serializable<Person> {
   }
 }
 
-interface Serializable<T> {
-  deserialize(input: any): T;
-}

@@ -1,4 +1,4 @@
-﻿namespace TourDe.Api.Data;
+﻿namespace TourDe.Core.Exceptions;
 
 public class NotFoundException : Exception
 {

@@ -1,5 +1,5 @@
-import { LeaderboardApiRoutes } from '@util/constants';
 import { Person } from '@models/person';
+import { LeaderboardApiRoutes } from '@util/constants';
 import { Table } from 'react-bootstrap';
 import { useFetch } from 'use-http';
 

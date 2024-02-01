@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TourDe.Core;
+using TourDe.Core.Exceptions;
 using TourDe.Models;
 
-namespace TourDe.Api.Data;
+namespace TourDe.Data;
 
 public class PersonRepository: IPersonRepository
 {
@@ -14,49 +15,49 @@ public class PersonRepository: IPersonRepository
     }
 
     /// <inheritdoc />
-    public async Task DeletePerson(int id)
+    public async Task DeletePerson(string id)
     {
-        _context.Persons.Remove(new Person {Id = id});
+        _context.Persons.Remove(new ApplicationUser {Id = id});
         await _context.SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public async Task<Person?> UpdatePerson(Person person)
+    public async Task<ApplicationUser> UpdatePerson(ApplicationUser applicationUser)
     {
-        var found = await _context.Persons.FindAsync(person.Id);
+        var found = await _context.Persons.FindAsync(applicationUser.Id);
         if (found is null)
         {
             throw new NotFoundException(ExceptionMessages.PersonNotFound);
         }
 
-        _context.Persons.Entry(person).CurrentValues.SetValues(person);
+        _context.Persons.Entry(applicationUser).CurrentValues.SetValues(applicationUser);
         await _context.SaveChangesAsync();
-        return person;
+        return applicationUser;
     }
 
     /// <inheritdoc />
-    public async Task<int> AddPerson(Person person)
+    public async Task<string> AddPerson(ApplicationUser applicationUser)
     {
-        await _context.Persons.AddAsync(person);
+        await _context.Persons.AddAsync(applicationUser);
         await _context.SaveChangesAsync();
 
-        return person.Id;
+        return applicationUser.Id;
     }
 
     /// <inheritdoc />
-    public async Task<Person?> GetPerson(int id)
+    public async Task<ApplicationUser?> GetPerson(string id)
     {
         return await _context.Persons.FindAsync(id);
     }
 
     /// <inheritdoc />
-    public async Task<List<Person>> GetAllPersons()
+    public async Task<List<ApplicationUser>> GetAllPersons()
     {
         return await _context.Persons.ToListAsync();
     }
 
     /// <inheritdoc />
-    public async Task<Person> GetPersonByEmail(string email)
+    public async Task<ApplicationUser?> GetPersonByEmail(string email)
     {
         return await _context.Persons.FirstOrDefaultAsync(p => p.Email == email);
     }

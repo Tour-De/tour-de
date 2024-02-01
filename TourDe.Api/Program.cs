@@ -1,17 +1,20 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TourDe.Api.Authorization;
-using TourDe.Api.Data;
 using TourDe.Api.Helpers;
 using TourDe.Api.Middleware;
 using TourDe.Core;
+using TourDe.Data;
+using TourDe.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// devs should use a local settings file for connection strings/secrets/etc.
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+builder.Services.Configure<ConnectionStrings>(
+    builder.Configuration.GetSection(ConnectionStrings.ConnectionStringsSectionName));
 
 builder.Services.AddCors(options =>
 {
@@ -25,7 +28,8 @@ builder.Services.AddCors(options =>
         });
 });
 
-var auth0Domain = builder.Configuration["Auth0:Domain"];
+var auth0Domain = builder.Configuration["Auth0:Domain"] ?? throw new InvalidOperationException("Auth0 domain not configured");
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,6 +38,7 @@ builder.Services.AddAuthentication(options =>
     options.Authority = auth0Domain;
     options.Audience = builder.Configuration["Auth0:Audience"];
 });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Policies.ReadPersonPolicyName,
@@ -60,8 +65,11 @@ builder.Services.AddSwaggerGen(c =>
 // add database connection
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+        x => x.MigrationsAssembly(Assembly.GetAssembly(typeof(DatabaseContext))!.FullName));
 });
+
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<DatabaseContext>();
 
 // repo/service dependency injection
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
@@ -82,6 +90,8 @@ if (app.Environment.IsDevelopment())
     });
     app.UseDeveloperExceptionPage();
 }
+
+app.MapGroup("/identity").MapIdentityApi<ApplicationUser>();
 
 app.UseHttpsRedirection();
 app.UseCors();

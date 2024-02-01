@@ -1,4 +1,4 @@
-﻿namespace TourDe.Api.Data;
+﻿namespace TourDe.Data;
 
 public class LocationRepository: ILocationRepository
 {
