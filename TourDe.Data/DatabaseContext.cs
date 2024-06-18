@@ -26,7 +26,10 @@ public class DatabaseContext: IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<IdentityUserClaim<string>>().ToTable(TableNames.UserClaims);
         modelBuilder.Entity<IdentityUserLogin<string>>().ToTable(TableNames.UserLogins);
         modelBuilder.Entity<IdentityUserToken<string>>().ToTable(TableNames.UserTokens);
-        modelBuilder.Entity<IdentityRole>().ToTable(TableNames.Roles);
+        modelBuilder.Entity<IdentityRole>().ToTable(TableNames.Roles).HasData(
+            new IdentityRole(IdentityRoles.User),
+            new IdentityRole(IdentityRoles.Admin)
+        );
         modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable(TableNames.RoleClaims);
         modelBuilder.Entity<IdentityUserRole<string>>().ToTable(TableNames.UserRoles);
     }

@@ -1,12 +1,25 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Person } from '@models/person';
-import { PersonApiRoutes } from '@util/constants';
+import { ApplicationUser } from '@models/person';
+import { login } from 'providers/identity_api';
 import { useEffect } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const LoginButton = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0()
+  const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently, user } = useAuth0()
+
+  useEffect(() => {
+    const userLoggedIn = async () => {
+      let token = await getAccessTokenSilently();
+      let appUser = new ApplicationUser('', user!.email!, user!.tourde_first_name!, user!.tourde_last_name!)
+      console.debug(user);
+      await login(token, appUser);
+    }
+
+    if (isAuthenticated && user) {
+      userLoggedIn();
+    }
+  }, [isAuthenticated, user])
 
   const onLogin = async () => {
     await loginWithRedirect({
@@ -40,4 +53,4 @@ const LoginButton = () => {
   )
 }
 
-export default LoginButton
+export default LoginButton;

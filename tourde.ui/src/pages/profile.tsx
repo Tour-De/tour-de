@@ -2,10 +2,10 @@ import { IdToken, useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 
 const Profile = () => {
-  const { user, isAuthenticated, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, getIdTokenClaims } = useAuth0();
   const [idToken, setIdToken] = useState<IdToken>();
 
-  useEffect(() => {
+  useEffect(() => { 
     getIdTokenClaims()
     .then(async (claims) => {
       setIdToken(claims)

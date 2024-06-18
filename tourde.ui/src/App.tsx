@@ -20,7 +20,7 @@ const App = () => {
           authorizationParams={{
             redirect_uri: window.location.origin,
             audience: 'TourDe',
-            scope: 'profile email read:person',
+            scope: 'profile email',
           }}
         >
           <Routes>
