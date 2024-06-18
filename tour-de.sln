@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Core", "TourDe.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Api", "TourDe.Api\TourDe.Api.csproj", "{4FD80988-5331-4779-B8F9-E14825E10990}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourDe.Data", "TourDe.Data\TourDe.Data.csproj", "{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Data", "TourDe.Data\TourDe.Data.csproj", "{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourDe.Services", "TourDe.Services\TourDe.Services.csproj", "{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

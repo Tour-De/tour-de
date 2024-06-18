@@ -5,6 +5,8 @@ using TourDe.Api.Helpers;
 using TourDe.Api.Middleware;
 using TourDe.Data;
 using TourDe.Models;
+using TourDe.Services;
+using TourDe.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,9 +48,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerServices();
 
 // repo/service dependency injection
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+builder.Services.AddTransient<IIdentityService, IdentityService>();
+builder.Services.AddTransient<IPersonRepository, PersonRepository>();
+builder.Services.AddTransient<ILocationRepository, LocationRepository>();
+builder.Services.AddTransient<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
 var app = builder.Build();

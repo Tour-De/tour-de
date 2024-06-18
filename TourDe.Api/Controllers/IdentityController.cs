@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TourDe.Core;
 using TourDe.Models;
+using TourDe.Services.Interfaces;
 
 namespace TourDe.Api.Controllers;
 
@@ -12,12 +11,12 @@ namespace TourDe.Api.Controllers;
 public class IdentityController : ControllerBase
 {
     private readonly ILogger<IdentityController> _logger;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IIdentityService _identityService;
 
-    public IdentityController(ILogger<IdentityController> logger, UserManager<ApplicationUser> userManager)
+    public IdentityController(ILogger<IdentityController> logger, IIdentityService identityService)
     {
         _logger = logger;
-        _userManager = userManager;
+        _identityService = identityService;
     }
 
     [HttpPost]
@@ -25,14 +24,8 @@ public class IdentityController : ControllerBase
     {
         _logger.LogInformation("User {Email} logged in", user.Email);
 
-        var doesUserExist = await _userManager.FindByEmailAsync(user.Email);
+        var roles = await _identityService.Login(user);
 
-        if (doesUserExist == null)
-        {
-            await _userManager.CreateAsync(user);
-            await _userManager.AddToRoleAsync(user, IdentityRoles.User);
-        }
-
-        return Ok();
+        return Ok(roles);
     }
 }
