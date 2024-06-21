@@ -5,10 +5,14 @@ const Profile = () => {
   const { user, isAuthenticated, getIdTokenClaims } = useAuth0();
   const [idToken, setIdToken] = useState<IdToken>();
 
-  useEffect(() => {
-    getIdTokenClaims().then((claims) => {
-      setIdToken(claims);
-    });
+  useEffect(() => { 
+    getIdTokenClaims()
+    .then(async (claims) => {
+      setIdToken(claims)
+      // send user data to API
+
+
+    })
   }, [getIdTokenClaims]);
 
   if (!isAuthenticated) {
@@ -20,6 +24,7 @@ const Profile = () => {
     );
   }
 
+  // sub contains 'provider|id'
   return (
     <div className="App">
       {isAuthenticated && user && (
