@@ -2,9 +2,9 @@
 
 public class AssignmentRepository: IAssignmentRepository
 {
-    private readonly DatabaseContext _context;
+    private readonly IdentityContext _context;
 
-    public AssignmentRepository(DatabaseContext context)
+    public AssignmentRepository(IdentityContext context)
     {
         _context = context;
     }

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Api", "TourDe.Api\To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Data", "TourDe.Data\TourDe.Data.csproj", "{AC7F868A-5504-4FEC-A2E7-41E827BA7AA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourDe.Services", "TourDe.Services\TourDe.Services.csproj", "{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourDe.Services", "TourDe.Services\TourDe.Services.csproj", "{7E1060CF-17F6-4F61-BC9A-ACB5B52E6E45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

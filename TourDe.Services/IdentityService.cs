@@ -10,10 +10,12 @@ public sealed class IdentityService: IIdentityService
 {
     private readonly ILogger _logger;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public IdentityService(ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager)
+    public IdentityService(ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
         _logger = loggerFactory.CreateLogger<IdentityService>();
     }
 
@@ -28,8 +30,23 @@ public sealed class IdentityService: IIdentityService
         {
             _logger.LogInformation("User does not exist, creating");
 
-            await _userManager.CreateAsync(user);
-            await _userManager.AddToRoleAsync(user, IdentityRoles.User);
+            user.Id = Guid.NewGuid().ToString();
+            var result = await _userManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                result = await _userManager.AddToRoleAsync(user, IdentityRoles.User);
+            }
+
+            if (result.Succeeded)
+            {
+                var loginInfo = new UserLoginInfo("Auth0", user.NormalizedEmail!, user.UserName);
+                result = await _userManager.AddLoginAsync(user, loginInfo);
+            }
+
+            if (!result.Succeeded)
+            {
+                _logger.LogError("Unable to create user account: {ErrorMessage}", string.Join(",", result.Errors.Select(x => x.Description)));
+            }
         }
 
         _logger.LogInformation("Returning roles");

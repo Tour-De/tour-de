@@ -7,9 +7,9 @@ namespace TourDe.Data;
 
 public class PersonRepository: IPersonRepository
 {
-    private readonly DatabaseContext _context;
+    private readonly IdentityContext _context;
 
-    public PersonRepository(DatabaseContext context)
+    public PersonRepository(IdentityContext context)
     {
         _context = context;
     }

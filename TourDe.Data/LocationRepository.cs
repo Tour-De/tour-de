@@ -2,9 +2,9 @@
 
 public class LocationRepository: ILocationRepository
 {
-    private readonly DatabaseContext _context;
+    private readonly IdentityContext _context;
 
-    public LocationRepository(DatabaseContext context)
+    public LocationRepository(IdentityContext context)
     {
         _context = context;
     }

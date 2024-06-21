@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TourDe.Api.Extensions;
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ConnectionStrings>(
     builder.Configuration.GetSection(ConnectionStrings.ConnectionStringsSectionName));
 
+builder.Logging.AddConsole();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -26,16 +29,17 @@ builder.Services.AddCors(options =>
 });
 
 // add database connection
-builder.Services.AddDbContext<DatabaseContext>(options =>
+builder.Services.AddDbContext<IdentityContext>(options =>
 {
+    var assemblyName = typeof(IdentityContext).Assembly.GetName().ToString();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"),
-        x => x.MigrationsAssembly("TourDe.Data"));
+        x => x.MigrationsAssembly(assemblyName));
 });
 
 // setup identity and role services
 builder.Services.AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<DatabaseContext>();
+    .AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.AddAuthorizationServices(builder.Configuration);
 
@@ -46,6 +50,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerServices();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+});
 
 // repo/service dependency injection
 builder.Services.AddTransient<IIdentityService, IdentityService>();
@@ -76,5 +84,11 @@ app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
