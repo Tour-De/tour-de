@@ -1,17 +1,20 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using TourDe.Api.Authorization;
-using TourDe.Api.Data;
+using TourDe.Api.Extensions;
 using TourDe.Api.Helpers;
 using TourDe.Api.Middleware;
-using TourDe.Core;
+using TourDe.Data;
+using TourDe.Models;
+using TourDe.Services;
+using TourDe.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// devs should use a local settings file for connection strings/secrets/etc.
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+builder.Services.Configure<ConnectionStrings>(
+    builder.Configuration.GetSection(ConnectionStrings.ConnectionStringsSectionName));
+
+builder.Logging.AddConsole();
 
 builder.Services.AddCors(options =>
 {
@@ -25,49 +28,38 @@ builder.Services.AddCors(options =>
         });
 });
 
-var auth0Domain = builder.Configuration["Auth0:Domain"];
-builder.Services.AddAuthentication(options =>
+// add database connection
+builder.Services.AddDbContext<IdentityContext>(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.Authority = auth0Domain;
-    options.Audience = builder.Configuration["Auth0:Audience"];
+    var assemblyName = typeof(IdentityContext).Assembly.GetName().ToString();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+        x => x.MigrationsAssembly(assemblyName));
 });
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(Policies.ReadPersonPolicyName,
-        policy => policy.Requirements.Add(new HasScopeRequirement(Policies.ReadPersonPolicyName, auth0Domain)));
-});
+
+// setup identity and role services
+builder.Services.AddIdentityCore<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<IdentityContext>();
+
+builder.Services.AddAuthorizationServices(builder.Configuration);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new CustomDateTimeConverter());
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerServices();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Tour De",
-        Description = Descriptions.SwaggerApiDescription,
-        Version = "v1"
-    });
-});
-
-// add database connection
-builder.Services.AddDbContext<DatabaseContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
 
 // repo/service dependency injection
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
-builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+builder.Services.AddTransient<IIdentityService, IdentityService>();
+builder.Services.AddTransient<IPersonRepository, PersonRepository>();
+builder.Services.AddTransient<ILocationRepository, LocationRepository>();
+builder.Services.AddTransient<IAssignmentRepository, AssignmentRepository>();
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
 var app = builder.Build();
@@ -85,10 +77,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    db.Database.Migrate();
+}
 
 app.Run();

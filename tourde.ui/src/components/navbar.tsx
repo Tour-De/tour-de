@@ -1,11 +1,8 @@
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
-import LoginButton from '@components/login';
-import LogoutButton from '@components/logout';
-import { useAuth0 } from '@auth0/auth0-react';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Button, Container, Nav, Navbar } from 'react-bootstrap'
+import LoginButton from '@components/login'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const NavBar = () => {
-  const { isAuthenticated } = useAuth0();
 
   return (
     <Navbar collapseOnSelect className="p-3 nav-header" expand={'md'}>
@@ -32,16 +29,7 @@ const NavBar = () => {
             </LinkContainer>
           </Nav>
           <Nav className="gap-2">
-            {isAuthenticated ? (
-              <>
-                <LinkContainer to="/profile">
-                  <Button className="btn-nav">Profile</Button>
-                </LinkContainer>
-                <LogoutButton />
-              </>
-            ) : (
-              <LoginButton />
-            )}
+            <LoginButton />
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -49,4 +37,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBar
