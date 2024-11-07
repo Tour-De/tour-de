@@ -3,19 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@auth0/auth0-react": "^2.0.1",
+    "@auth0/auth0-react": "^2.2.4",
     "@craco/craco": "^7.1.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/axios": "^0.14.0",
-    "@types/bootstrap": "^5.2.6",
-    "@types/jest": "^27.5.2",
-    "@types/luxon": "^3.3.0",
-    "@types/node": "^16.18.24",
-    "@types/react": "^18.0.37",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-router-bootstrap": "^0.26.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/axios": "^0.14.4",
+    "@types/bootstrap": "^5.2.10",
+    "@types/jest": "^29.5.14",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/react-router-bootstrap": "^0.26.6",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.0",
     "bootstrap": "^5.2.3",
@@ -55,6 +55,6 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "3.3.3"
   }
 }

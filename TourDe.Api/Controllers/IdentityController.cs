@@ -31,6 +31,11 @@ public class IdentityController : ControllerBase
     {
         _loggerFactory.LogInformation("User {Email} logged in", user.Email);
 
+        if (string.IsNullOrEmpty(user.Email))
+        {
+            return BadRequest("Email is required");
+        }
+
         var roles = await _identityService.Login(user);
 
         return Ok(roles);
