@@ -1,6 +1,6 @@
-import NavBar from '@components/navbar';
 import { Link } from 'react-router-dom';
-import Countdown from '@components/countdown';
+import Countdown from './countdown';
+import NavBar from './navbar';
 
 const Header = () => {
   return (

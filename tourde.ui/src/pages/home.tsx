@@ -1,5 +1,5 @@
-import Article from '@components/article';
-import { Container } from 'react-bootstrap';
+import { Container } from "@mui/material";
+import Article from "../components/article";
 
 const Home = () => {
   return (

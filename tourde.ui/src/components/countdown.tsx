@@ -1,5 +1,5 @@
-import { DateTime, Duration } from 'luxon';
 import { useEffect, useState } from 'react';
+import { DateTime, Duration } from 'luxon';
 
 const Countdown = () => {
   const startDate: string = process.env.REACT_APP_RACE_START!;

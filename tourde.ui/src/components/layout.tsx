@@ -1,14 +1,14 @@
-import Header from '@components/header';
-import Sidebar from '@components/sidebar';
-import { Container, Stack } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
+import Header from './header';
+import { Container, Stack } from '@mui/material';
+import Sidebar from './sidebar';
 
 const Layout = () => {
   return (
     <>
       <Header />
-      <Container fluid className="main">
-        <Stack direction="horizontal">
+      <Container className="main">
+        <Stack direction={'row'}>
           <Outlet />
           <Sidebar />
         </Stack>

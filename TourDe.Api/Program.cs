@@ -11,6 +11,8 @@ using TourDe.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+
 builder.Services.Configure<ConnectionStrings>(
     builder.Configuration.GetSection(ConnectionStrings.ConnectionStringsSectionName));
 

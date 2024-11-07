@@ -1,7 +1,3 @@
-import { Button, Container, Nav, Navbar } from 'react-bootstrap'
-import LoginButton from '@components/login'
-import { LinkContainer } from 'react-router-bootstrap'
-
 const NavBar = () => {
 
   return (

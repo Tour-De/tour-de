@@ -1,6 +1,6 @@
-import { IdentityApiRoutes } from '@util/constants';
+import { ApplicationUser } from '../models/person';
+import { IdentityApiRoutes } from '../util/constants';
 import axiosInstance from './api';
-import { ApplicationUser } from '@models/person';
 
 /**
  *

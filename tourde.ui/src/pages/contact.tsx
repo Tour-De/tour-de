@@ -1,4 +1,4 @@
-import EmailLink from '@components/emailLink';
+import EmailLink from "../components/emailLink";
 
 const Contact = () => {
   return (
