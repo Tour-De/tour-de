@@ -1,26 +1,9 @@
-export class Person implements Serializable<Person>
-{
-    constructor(
-        public id: number,
-        public firstName: string,
-        public lastName: string,
-        public email: string,
-        public phone?: string,
-        public dateOfBirth?: string,
-    ) {
-    }
-
-    deserialize(input: any): Person {
-        this.id = input.id;
-        this.firstName = input.firstName;
-        this.lastName = input.lastName;
-        this.email = input.email;
-        this.phone = input.phone;
-        this.dateOfBirth = input.dateOfBirth;
-        return this;
-    }
-}
-
-interface Serializable<T> {
-    deserialize(input: any): T;
+export class ApplicationUser {
+  constructor(
+    public id: string,
+    public email: string,
+    public firstName: string,
+    public lastName: string,
+    public username: string
+  ) {}
 }
