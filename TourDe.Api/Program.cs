@@ -16,7 +16,10 @@ builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, relo
 builder.Services.Configure<ConnectionStrings>(
     builder.Configuration.GetSection(ConnectionStrings.ConnectionStringsSectionName));
 
-builder.Logging.AddConsole();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Logging.AddConsole();
+}
 
 builder.Services.AddCors(options =>
 {

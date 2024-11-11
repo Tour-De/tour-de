@@ -6,6 +6,9 @@ using TourDe.Services.Interfaces;
 
 namespace TourDe.Api.Controllers;
 
+/// <summary>
+/// 
+/// </summary>
 [ApiController]
 [Authorize]
 [Route("api/[controller]")]
@@ -14,6 +17,11 @@ public class IdentityController : ControllerBase
     private readonly ILogger<IdentityController> _loggerFactory;
     private readonly IIdentityService _identityService;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="loggerFactory"></param>
+    /// <param name="identityService"></param>
     public IdentityController(ILoggerFactory loggerFactory, IIdentityService identityService)
     {
         _loggerFactory = loggerFactory.CreateLogger<IdentityController>();
@@ -36,8 +44,13 @@ public class IdentityController : ControllerBase
             return BadRequest("Email is required");
         }
 
-        var roles = await _identityService.Login(user);
+        var loginResult = await _identityService.Login(user);
 
-        return Ok(roles);
+        if (loginResult.IsFailed)
+        {
+            return BadRequest(loginResult.Errors);
+        }
+
+        return Ok(loginResult.Value);
     }
 }

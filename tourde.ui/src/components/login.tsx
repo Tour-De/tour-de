@@ -1,8 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { ApplicationUser } from '../models/person';
 import { Button } from '@mui/material';
 import { login } from '../providers/identity_api';
+import { Link } from 'react-router-dom';
+import { IdentityContext } from '../context/identityContext';
 
 const LoginButton = () => {
   const {
@@ -12,6 +14,7 @@ const LoginButton = () => {
     getAccessTokenSilently,
     user,
   } = useAuth0();
+  const {roles, setRoles} = useContext(IdentityContext);
 
   useEffect(() => {
     const userLoggedIn = async () => {
@@ -23,7 +26,8 @@ const LoginButton = () => {
         user!.tourde_last_name!,
         user!.email!
       );
-      await login(token, appUser);
+      const roles = await login(token, appUser);
+      setRoles(roles);
     };
 
     if (isAuthenticated && user) {
@@ -49,17 +53,13 @@ const LoginButton = () => {
   return (
     <>
       {isAuthenticated ? (
-        <LinkContainer to="/profile">
-          <Button className="btn-nav">Profile</Button>
-        </LinkContainer>
+          <Button variant={'contained'} component={Link} to={'/profile'} className="btn-nav">Profile</Button>
       ) : (
         <></>
       )}
-      <LinkContainer to="">
-        <Button className="btn-nav" onClick={onClick}>
-          {buttonText}
-        </Button>
-      </LinkContainer>
+      <Button variant={'contained'} component={Link} to={''} className="btn-nav" onClick={onClick}>
+        {buttonText}
+      </Button>
     </>
   );
 };

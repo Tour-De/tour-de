@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DateTime, Duration } from 'luxon';
 
 const Countdown = () => {
-  const startDate: string = process.env.REACT_APP_RACE_START!;
+  const startDate: string = import.meta.env.REACT_APP_RACE_START!;
   const initialDuration: Duration = calculateTimeUntilStart(startDate);
   const [currentDuration, setDuration] = useState(initialDuration);
 
@@ -46,7 +46,7 @@ const Countdown = () => {
  */
 const calculateTimeUntilStart = (startDate: string): Duration => {
   let startTime: DateTime = DateTime.fromJSDate(new Date(startDate), {
-    zone: process.env.REACT_APP_TIMEZONE,
+    zone: import.meta.env.REACT_APP_TIMEZONE,
   });
   return startTime.diffNow(['day', 'hour', 'minute', 'second']);
 };

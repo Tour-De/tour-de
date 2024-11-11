@@ -2,6 +2,9 @@
 
 namespace TourDe.Api.Extensions;
 
+/// <summary>
+/// Extension functions for supporting authorization/authentication.
+/// </summary>
 public static class AuthorizationServicesExtensions
 {
     /// <summary>
@@ -16,7 +19,7 @@ public static class AuthorizationServicesExtensions
         var authBuilder = services.AddAuthentication();
         authBuilder.AddJwtBearer(options =>
         {
-            options.Authority = configuration["Authentication:Auth0:Domain"];
+            options.Authority = configuration["Authentication:Auth0:Domain"] ?? throw new MissingConfigurationException("Authentication: Auth0:Domain");
             options.Audience = configuration["Authentication:Auth0:Audience"] ?? throw new MissingConfigurationException("Authentication:Auth0:Audience");
         });
         

@@ -1,4 +1,5 @@
-﻿using TourDe.Core;
+﻿using FluentResults;
+using TourDe.Core;
 using TourDe.Models;
 
 namespace TourDe.Services.Interfaces;
@@ -10,5 +11,5 @@ public interface IIdentityService
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    Task<IList<string>> Login(ApplicationUser user);
+    Task<Result<IList<string>>> Login(ApplicationUser user);
 }

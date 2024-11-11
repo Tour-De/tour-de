@@ -10,8 +10,9 @@ import Leaderboards from './pages/leaderboards';
 import Media from './pages/media';
 import NotFound from './pages/notFound';
 import Profile from './pages/profile';
+import IdentityContextProvider from './context/identityContext';
 
-function App() {
+const App = () => {
   return (    
     <BrowserRouter>
       <Auth0Provider
@@ -23,6 +24,7 @@ function App() {
           scope: 'profile email',
         }}
       >
+        <IdentityContextProvider>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -35,9 +37,10 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        </IdentityContextProvider>
       </Auth0Provider>
     </BrowserRouter>    
-);
+  );
 }
 
-export default App
+export default App;
