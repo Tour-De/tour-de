@@ -1,3 +1,3 @@
-global using NUnit.Framework;
-global using AutoFixture.NUnit3;
+global using Xunit;
 global using FluentAssertions;
+global using Moq;

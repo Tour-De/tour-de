@@ -41,14 +41,15 @@ public class IdentityController : ControllerBase
 
         if (string.IsNullOrEmpty(user.Email))
         {
-            return BadRequest("Email is required");
+            return Problem(detail: "Email is required", statusCode: StatusCodes.Status400BadRequest);
         }
 
         var loginResult = await _identityService.Login(user);
 
         if (loginResult.IsFailed)
         {
-            return BadRequest(loginResult.Errors);
+            var errorString = string.Join(", ", loginResult.Errors.Select(x => x.Message));
+            return Problem(detail: errorString, statusCode: StatusCodes.Status400BadRequest);
         }
 
         return Ok(loginResult.Value);
